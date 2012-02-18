@@ -77,11 +77,11 @@ function createTemplate(data, id) {
         '    _output = "",',
         '    _this = this;',
         // Note: this loop averages much faster than indexOf across all cases
-        'while (j--) {',
-        '   if (_parents[j] === this.id) {',
-        '         return "Circular import of template " + this.id + " in " + _parents[_parents.length-1];',
-        '   }',
-        '}',
+//        'while (j--) {',
+//        '   if (_parents[j] === this.id) {',
+//        '         return "Circular import of template " + this.id + " in " + _parents[_parents.length-1];',
+//        '   }',
+//        '}',
         // Add this template as a parent to all includes in its scope
         '_parents.push(this.id);',
         code,
