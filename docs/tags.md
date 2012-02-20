@@ -36,10 +36,14 @@ See [Template inheritance](inheritance.md) for more information.
 
 ### include <a name="include" href="#include">#</a>
 
-Includes a template in it's place. The template is rendered within the current context. Does not use and {% endinclude %}.
+Includes a template in it's place. The template is rendered within the current context.
 
     {% include template_path %}
     {% include "path/to/template.js" %}
+
+You can mark an include to `ignore missing` so that if the template does not exist, it will be ignored and no error will be thrown.
+
+    {% include "foobar.html" ignore missing %}
 
 Locally declared context variables are _not_ passed to the included template by default. For example, in the following situations, your `inc.html` will not know about the variables `foo` nor `bar`:
 
@@ -50,13 +54,13 @@ Locally declared context variables are _not_ passed to the included template by 
         {% include "inc.html" %}
     {% endfor %}
 
-In order to have your included template get these locally declared variables, you can use the `with` argument, followed by space-separated tokens of the local variables to include in the context:
+In order to have your included template get these locally declared variables, you can use the `with` argument, followed by an object that will create the context of the included template:
 
-    {% set foo = "bar" %}
+    {% set foo = { bar: "baz" } %}
     {% include "inc.html" with foo %}
 
     {% for bar in thing %}
-        {% include "inc.html" with foo bar %}
+        {% include "inc.html" with bar %}
     {% endfor %}
 
 You can also use the `only` argument to restrict the context to the variables that you explicitly define.
@@ -160,7 +164,7 @@ Also supports using the `{% else %}` and `{% else if ... %}` tags within an if-b
 
 The `autoescape` tag accepts two controls:
 
-1. `on` or `off`: (default is `on` if not provided). These either turn variable auto-escaping on or off for the contents of the filter, regardless of the global setting.
+1. `true` or `false`: (default is `true` if not provided) These either turn variable auto-escaping on or off for the contents of the tag, regardless of the global setting.
 1. escape-type: optionally include `"js"` to escape variables safe for JavaScript
 
 For the following contexts, assume:
